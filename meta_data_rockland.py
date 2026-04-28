@@ -176,7 +176,8 @@ for file_path in ds2_sherlock_file_paths:
         # Add timestamps 
         df_left_eye['times'] = times_left_eye
         # Add subjectID 
-        subject_id = file_path.split('/')[10]
+        subject_id = file_path.split('/')[6]
+        print("subjectID:", subject_id)
         df_left_eye['subjectID'] = subject_id 
         # Add to all_dfs 
         all_dfs_left_eye.append(df_left_eye)
