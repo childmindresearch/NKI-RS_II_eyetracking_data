@@ -29,10 +29,10 @@ sherlock_ds2_right_eye_df = pd.read_csv('sherlock_ds2_right_eye_df.csv')
 ##############################################################################################
 ########################### # SUBJECTS PER DF ##############################################
 #############################################################################################
-n_subj_present_right_eye = len(present_ds2_right_eye_df['subjectID'])
-n_subj_present_left_eye = len(present_ds2_left_eye_df['subjectID'])
-n_subj_sherlock_right_eye = len(present_ds2_right_eye_df['subjectID'])
-n_subj_sherlock_left_eye = len(present_ds2_left_eye_df['subjectID'])
+n_subj_present_right_eye = len(present_ds2_right_eye_df['subjectID'].unique())
+n_subj_present_left_eye = len(present_ds2_left_eye_df['subjectID'].unique())
+n_subj_sherlock_right_eye = len(present_ds2_right_eye_df['subjectID'].unique())
+n_subj_sherlock_left_eye = len(present_ds2_left_eye_df['subjectID'].unique())
 print(f"Number of subjects present_right_eye: {n_subj_present_right_eye}")
 print(f"Number of subjects present_left_eye: {n_subj_present_left_eye}")
 print(f"Number of subjects sherlock_right_eye: {n_subj_sherlock_right_eye}")
