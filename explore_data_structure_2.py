@@ -21,9 +21,9 @@ def descr_stats(df, column_name):
     return stats
 
 # Read in data 
-# present_ds2_left_eye_df = pd.read_csv('present_ds2_left_eye_df.csv')
-# present_ds2_right_eye_df = pd.read_csv('present_ds2_right_eye_df.csv')
-# sherlock_ds2_left_eye_df = pd.read_csv('sherlock_ds2_left_eye_df.csv')
+present_ds2_left_eye_df = pd.read_csv('present_ds2_left_eye_df.csv')
+present_ds2_right_eye_df = pd.read_csv('present_ds2_right_eye_df.csv')
+sherlock_ds2_left_eye_df = pd.read_csv('sherlock_ds2_left_eye_df.csv')
 sherlock_ds2_right_eye_df = pd.read_csv('sherlock_ds2_right_eye_df.csv')
 
 # Check data 
@@ -34,6 +34,39 @@ print(f"sherlock_ds2_right_eye_df {sherlock_ds2_right_eye_df.head()}")
 
 
 ########################### SHERLOCK RIGHT EYE ###########################
-check_zero = sherlock_ds2_right_eye_df.groupby('subjectID')['rightEyeX'].sum()
-print(f"values are 0 then subjecct had no ET data: {check_zero}")
+check_zero_x = sherlock_ds2_right_eye_df.groupby('subjectID')['rightEyeX'].sum()
+subjects_with_zero = check_zero_x[check_zero_x == 0]
+print(f"Number of Subject with 0 for sherlock_right_eye_x: {len(subjects_with_zero)}")
+
+check_zero_y = sherlock_ds2_right_eye_df.groupby('subjectID')['rightEyeY'].sum()
+subjects_with_zero = check_zero_y[check_zero_y == 0]
+print(f"Number of Subject with 0 for sherlock_right_eye_y: {len(subjects_with_zero)}")
+
+########################### SHERLOCK LEFT EYE ###########################
+check_zero_x = sherlock_ds2_left_eye_df.groupby('subjectID')['leftEyeX'].sum()
+subjects_with_zero = check_zero_x[check_zero_x == 0]
+print(f"Number of Subjects with 0 for sherlock_left_eye_x: {len(subjects_with_zero)}")
+
+check_zero_y = sherlock_ds2_left_eye_df.groupby('subjectID')['leftEyeY'].sum()
+subjects_with_zero = check_zero_y[check_zero_y == 0]
+print(f"Number of Subject with 0 for sherlock_left_eye_y: {len(subjects_with_zero)}")
+
+
+########################### PRESENT RIGHT EYE ###########################
+check_zero_x = present_ds2_right_eye_df.groupby('subjectID')['rightEyeX'].sum()
+subjects_with_zero = check_zero_x[check_zero_x == 0]
+print(f"Number of Subject with 0 for present_right_eye_x: {len(subjects_with_zero)}")
+
+check_zero_y = present_ds2_right_eye_df.groupby('subjectID')['rightEyeY'].sum()
+subjects_with_zero = check_zero_y[check_zero_y == 0]
+print(f"Number of Subject with 0 for present_right_eye_y: {len(subjects_with_zero)}")
+
+########################### PRESENT LEFT EYE ###########################
+check_zero_x = present_ds2_left_eye_df.groupby('subjectID')['leftEyeX'].sum()
+subjects_with_zero = check_zero_x[check_zero_x == 0]
+print(f"Number of Subjects with 0 for present_left_eye_x: {len(subjects_with_zero)}")
+
+check_zero_y = present_ds2_left_eye_df.groupby('subjectID')['leftEyeY'].sum()
+subjects_with_zero = check_zero_y[check_zero_y == 0]
+print(f"Number of Subject with 0 for present_left_eye_y: {len(subjects_with_zero)}")
 
