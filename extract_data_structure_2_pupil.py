@@ -112,78 +112,45 @@ for file_path in ds2_present_file_paths:
 
 present_ds2_pupil_diamter = pd.concat(all_dfs_pupil_diameter)
 print(present_ds2_pupil_diamter.head())
-present_ds2_pupil_diamter.to_csv("/home/nburke/Documents/NKI-RS_II_eyetracking_data_outputs/test_pupil_diameter.csv")
+present_ds2_pupil_diamter.to_csv("/home/nburke/Documents/NKI-RS_II_eyetracking_data_outputs/present_ds2_pupil.csv")
 # print("Number of subjects in PRESENT DS2:", len(present_ds2_pupil_diamter['subjectID'].unique()))
 # print(f"PRESENT: mean_x = {present_ds2_pupil_diamter['leftEyeX'].mean()}, min_x = {present_ds2_pupil_diamter['leftEyeX'].min()}, max_x = {present_ds2_pupil_diamter['leftEyeX'].max()}")
 
+###################### SHERLOCK: data_structure_2
+all_dfs_pupil_diameter = []
+
+for file_path in ds2_sherlock_file_paths:
+    # print("*****************")
+    with NWBHDF5IO(file_path, 'r') as io:
+        nwbfile = io.read()
+        present_keys = list(nwbfile.acquisition.keys())
+        ###############  PUPIL DIAMETER  ###############
+        # keys and containers 
+        pupil_diameter_key = next(key for key in present_keys if 'Pupil_Diameters_EL' in key)
+        print("pupil diamter key:", pupil_diameter_key)
+        # Data Array 
+        cst_pupil = nwbfile.acquisition[pupil_diameter_key].data[:]
+        # Timestamps for each datapoint
+        times_pupil = nwbfile.acquisition[pupil_diameter_key].timestamps[:]
+        # Description for cst data holds all headers 
+        headers_pupil = nwbfile.acquisition[pupil_diameter_key].description.split(',')
+        print("HEADERS:", headers_pupil)
+       
+        ### Make dataframe 
+        df_pupil_diameter = pd.DataFrame(cst_pupil, columns=headers_pupil)
+        # Add timestamps 
+        df_pupil_diameter['times'] = times_pupil
+        # Add subjectID 
+        # print("checking file_path:", file_path)
+        subject_id = file_path.split('/')[6]
+        print("subjectID:", subject_id)
+        df_pupil_diameter['subjectID'] = subject_id 
+        # Add to all_dfs 
+        all_dfs_pupil_diameter.append(df_pupil_diameter)
 
 
-# ###################### The SHERLOCK: data_structure_2
-# all_dfs_pupil_diameter = []
-# all_dfs_right_eye = []
-
-# for file_path in ds2_sherlock_file_paths:
-#     # print("*****************")
-#     with NWBHDF5IO(file_path, 'r') as io:
-#         nwbfile = io.read()
-#         present_keys = list(nwbfile.acquisition.keys())
-#         ###############  LEFT EYE ###############
-#         # keys and containers 
-#         left_eye_gaze_key = next(key for key in present_keys if "Left_eye_gaze" in key)
-#         # print(left_eye_gaze_key)
-#         container_left_eye = nwbfile.acquisition[left_eye_gaze_key]
-#         container_left_eye_key = next(iter(container_left_eye.spatial_series.keys()))
-#         # print(container_left_eye_key)
-        
-#         ### Extract data (per NKI instructions)
-#         obj_left_eye = nwbfile.acquisition[left_eye_gaze_key]
-#         cst_left_eye = obj_left_eye.spatial_series[container_left_eye_key].data[:]
-#         times_left_eye = obj_left_eye.spatial_series[container_left_eye_key].timestamps
-#         # Description for cst data 
-#         headers_left_eye = obj_left_eye.spatial_series[container_left_eye_key].description.split(',')
-
-#         ### Make dataframe 
-#         df_pupil_diameter = pd.DataFrame(cst_left_eye, columns=headers_left_eye)
-#         # Add timestamps 
-#         df_pupil_diameter['times'] = times_left_eye
-#         # Add subjectID 
-#         subject_id = file_path.split('/')[6]
-#         print("subjectID:", subject_id)
-#         df_pupil_diameter['subjectID'] = subject_id 
-#         # Add to all_dfs 
-#         all_dfs_left_eye.append(df_pupil_diameter)
-
-#         ###############  RIGHT EYE ###############
-#         # keys and containers 
-#         right_eye_gaze_key = next(key for key in present_keys if "Right_eye_gaze" in key)
-#         container_right_eye = nwbfile.acquisition[right_eye_gaze_key]
-#         container_right_eye_key = next(iter(container_right_eye.spatial_series.keys()))
-#         # print(container_right_eye_key)
-        
-#         ### Extract data (per NKI instructions)
-#         obj_right_eye = nwbfile.acquisition[right_eye_gaze_key]
-#         cst_right_eye = obj_right_eye.spatial_series[container_right_eye_key].data[:]
-#         times_right_eye = obj_right_eye.spatial_series[container_right_eye_key].timestamps
-#         # Description for cst data 
-#         headers_right_eye = obj_right_eye.spatial_series[container_right_eye_key].description.split(',')
-
-#         ### Make dataframe 
-#         df_right_eye = pd.DataFrame(cst_right_eye, columns=headers_right_eye)
-#         # Add timestamps 
-#         df_right_eye['times'] = times_right_eye
-#         # Add subjectID 
-#         subject_id = file_path.split('/')[6]
-#         df_right_eye['subjectID'] = subject_id 
-#         # Add to all_dfs 
-#         all_dfs_right_eye.append(df_right_eye)
-
-# sherlock_ds2_left_eye_df = pd.concat(all_dfs_left_eye)
-# print(sherlock_ds2_left_eye_df.head())
-# sherlock_ds2_left_eye_df.to_csv('/home/nburke/Documents/NKI-RS_II_eyetracking_data_outputs/sherlock_ds2_left_eye_df.csv')
-# # print("Number of subjects in SHERLOCK DS2:", len(sherlock_ds2_left_eye_df['subjectID'].unique()))
-# # print(f"SHERLOCK: mean_x = {sherlock_ds2_left_eye_df['leftEyeX'].mean()}, min_x = {sherlock_ds2_left_eye_df['leftEyeX'].min()}, max_x = {sherlock_ds2_left_eye_df['leftEyeX'].max()}")
-# sherlock_ds2_right_eye_df = pd.concat(all_dfs_right_eye)
-# print(sherlock_ds2_right_eye_df.head())
-# sherlock_ds2_right_eye_df.to_csv('/home/nburke/Documents/NKI-RS_II_eyetracking_data_outputs/sherlock_ds2_right_eye_df.csv')
-# # print(sherlock_ds2_right_eye_df['subjectID'].unique())
-# # print("Number of Subjects:", len(sherlock_ds2_right_eye_df['subjectID'].unique()))
+present_ds2_pupil_diamter = pd.concat(all_dfs_pupil_diameter)
+print(present_ds2_pupil_diamter.head())
+present_ds2_pupil_diamter.to_csv("/home/nburke/Documents/NKI-RS_II_eyetracking_data_outputs/sherlock_ds2_pupil.csv")
+# print("Number of subjects in PRESENT DS2:", len(present_ds2_pupil_diamter['subjectID'].unique()))
+# print(f"PRESENT: mean_x = {present_ds2_pupil_diamter['leftEyeX'].mean()}, min_x = {present_ds2_pupil_diamter['leftEyeX'].min()}, max_x = {present_ds2_pupil_diamter['leftEyeX'].max()}")
