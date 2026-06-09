@@ -123,10 +123,10 @@ for file_path in ds2_sherlock_file_paths:
     # print("*****************")
     with NWBHDF5IO(file_path, 'r') as io:
         nwbfile = io.read()
-        present_keys = list(nwbfile.acquisition.keys())
+        sherlock_keys = list(nwbfile.acquisition.keys())
         ###############  PUPIL DIAMETER  ###############
         # keys and containers 
-        pupil_diameter_key = next(key for key in present_keys if 'Pupil_Diameters_EL' in key)
+        pupil_diameter_key = next(key for key in sherlock_keys if 'Pupil_Diameters_EL' in key)
         print("pupil diamter key:", pupil_diameter_key)
         # Data Array 
         cst_pupil = nwbfile.acquisition[pupil_diameter_key].data[:]
