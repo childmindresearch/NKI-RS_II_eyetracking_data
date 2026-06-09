@@ -11,7 +11,7 @@ os.chdir(directory)
 print("DIRECTORY:", os.getcwd())
 
 # List all subject folders 
-subject_folders = os.listdir(directory)[0:5]
+subject_folders = os.listdir(directory)
 print("Number of Subjects:", len(subject_folders))
 
 passive_sherlock_files = []
