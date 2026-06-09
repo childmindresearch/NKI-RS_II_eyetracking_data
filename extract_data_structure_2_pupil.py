@@ -95,7 +95,7 @@ for file_path in ds2_present_file_paths:
         times_pupil = nwbfile.acquisition[pupil_diameter_key].timestamps[:]
         # Description for cst data holds all headers 
         headers_pupil = nwbfile.acquisition[pupil_diameter_key].description.split(',')
-        print("HEADERS:", headers)
+        print("HEADERS:", headers_pupil)
        
         ### Make dataframe 
         df_pupil_diameter = pd.DataFrame(cst_pupil, columns=headers_pupil)
