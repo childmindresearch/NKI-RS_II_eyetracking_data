@@ -90,11 +90,11 @@ for file_path in ds2_present_file_paths:
         pupil_diameter_key = next(key for key in present_keys if 'Pupil_Diameters_EL' in key)
         print("pupil diamter key:", pupil_diameter_key)
         # Data Array 
-        cst_pupil = nwbfile.acquistion[pupil_diameter_key].data[:]
+        cst_pupil = nwbfile.acquisition[pupil_diameter_key].data[:]
         # Timestamps for each datapoint
-        times_pupil = nwbfile.acquistion[pupil_diameter_key].timestamps[:]
+        times_pupil = nwbfile.acquisition[pupil_diameter_key].timestamps[:]
         # Description for cst data holds all headers 
-        headers_pupil = nwbfile.acquistion[pupil_diameter_key].description.split(',')
+        headers_pupil = nwbfile.acquisition[pupil_diameter_key].description.split(',')
         print("HEADERS:", headers)
        
         ### Make dataframe 
