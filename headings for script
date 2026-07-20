@@ -1,0 +1,47 @@
+## *Sherlock* DS1 Preprocesssing
+
+### Exclude subjects with large difference in time gap 
+
+Check that excluded subjects are excluded 
+
+### Descriptive Stats 
+
+### 1. Clean Data: clip to screen dimension for x_corr and y_corr and recode extreme values of pupil diameter to 0 
+
+#### 1a: Clip x_corr and y_corr to the screen dimensions 
+Values outside the dimension of our screen get recoded to their the lower or upper bound
+
+
+#### 1b: Recode extreme values of pupil diameter to 0
+To run the blink detection algothrim, it needs 0 values, not NA. 
+
+### 2. Blink Detection - Hershman et al. 2018
+Using open source code from Hershman et al. 2018: https://osf.io/jyz43/files/qh5sg
+
+Confirm sampling rate 
+
+Detect blinks - make sure this works 
+
+Mask blinks - function to run blink detection algothrim on whole sample 
+
+Apply blink detection 
+
+Re-plot data to see what it looks like
+
+### 3. Butterworth Low Pass Filter
+
+Re-plot to see what data looks like
+
+Show filtered vs. unfiltered data 
+
+Get subset of subjects to plot 
+
+### 4. Standarized Data (min-max filter)
+
+### 5. Computer Euclidean Distance
+
+### 6. Compute ISC 
+
+Combine ISC data with dataframe 
+
+### 7. PLOT
